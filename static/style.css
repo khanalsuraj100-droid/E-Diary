@@ -1,0 +1,15 @@
+.post-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-top: 10px;
+}
+
+.post-actions button {
+    margin: 0;
+    padding: 8px 12px;
+}
+
+.like-count {
+    margin: 0;
+}

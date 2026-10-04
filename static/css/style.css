@@ -1,0 +1,141 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0b1120;
+    color: white;
+}
+
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: radial-gradient(circle at top, #172554, #0b1120 50%, #020617);
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 430px;
+    background: #111827;
+    border: 1px solid #263449;
+    border-radius: 22px;
+    padding: 38px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.45);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 30px;
+}
+
+.logo-icon {
+    width: 55px;
+    height: 55px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0b1220;
+    border: 1px solid #334155;
+    color: white;
+    font-size: 30px;
+    font-weight: 800;
+    box-shadow: 0 0 20px rgba(37,99,235,.35);
+}
+
+.logo h1 {
+    margin: 0;
+    font-size: 25px;
+}
+
+.logo p {
+    margin: 4px 0 0;
+    color: #60a5fa;
+    font-size: 13px;
+}
+
+h2 {
+    margin-bottom: 6px;
+    font-size: 27px;
+}
+
+.subtitle {
+    color: #94a3b8;
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+
+label {
+    display: block;
+    margin: 16px 0 7px;
+    color: #cbd5e1;
+    font-size: 14px;
+}
+
+input {
+    width: 100%;
+    padding: 13px 15px;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    background: #0f172a;
+    color: white;
+    outline: none;
+    font-size: 15px;
+}
+
+input:focus {
+    border-color: #3b82f6;
+}
+
+button {
+    width: 100%;
+    margin-top: 25px;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: #2563eb;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #1d4ed8;
+}
+
+.bottom-text {
+    text-align: center;
+    color: #94a3b8;
+    margin-top: 22px;
+}
+
+a {
+    color: #60a5fa;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.message {
+    padding: 11px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.message.error {
+    background: #3f1d2e;
+    color: #fda4af;
+}
+
+.message.success {
+    background: #123524;
+    color: #86efac;
+}

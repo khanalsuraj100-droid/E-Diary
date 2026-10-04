@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Diary - Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <div class="brand">
+        <div class="brand-icon">E</div>
+        <div>
+            <strong>E-Diary</strong>
+            <small>Think • Write • Share</small>
+        </div>
+    </div>
+
+    <div class="search">
+        🔍 <input type="text" placeholder="Search people, posts...">
+    </div>
+
+    <div class="top-actions">
+        <span>🔔</span>
+        <span>💬</span>
+        <span class="user-mini">{{ user.username }}</span>
+    </div>
+
+</header>
+
+
+<div class="layout">
+
+    <aside class="sidebar">
+
+        <a class="active">🏠 Home</a>
+        <a>🔍 Search</a>
+        <a>👥 Friends</a>
+        <a>💬 Messages</a>
+        <a>🔔 Notifications</a>
+        <a>👤 Profile</a>
+        <a>⚙️ Settings</a>
+
+        <div class="sidebar-bottom">
+            <a href="{{ url_for('logout') }}">🚪 Logout</a>
+        </div>
+
+    </aside>
+
+
+    <main class="feed">
+
+        <section class="welcome">
+            <h1>Welcome, {{ user.username }} 👋</h1>
+            <p>What's happening in your world today?</p>
+        </section>
+
+
+        <section class="create-post">
+
+            <div class="avatar">
+                {{ user.username[0]|upper }}
+            </div>
+
+            <form action="{{ url_for('create_post') }}" method="POST">
+
+                <textarea
+                    name="content"
+                    placeholder="What's on your mind?"
+                    required></textarea>
+
+                <div class="post-options">
+                    <span>📷 Photo</span>
+                    <span>😊 Feeling</span>
+                    <span>📍 Location</span>
+
+                    <button type="submit">Post</button>
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <div class="feed-title">
+            <h2>Latest Posts</h2>
+        </div>
+
+
+        {% for post in posts %}
+
+        <article class="post">
+
+            <div class="post-header">
+
+                <div class="avatar">
+                    {{ post.user.username[0]|upper }}
+                </div>
+
+                <div>
+                    <strong>{{ post.user.username }}</strong>
+                    <small>{{ post.created_at.strftime("%d %b %Y, %I:%M %p") }}</small>
+                </div>
+
+            </div>
+
+            <div class="post-content">
+                {{ post.content }}
+            </div>
+            <div class="post-actions">
+
+                <button
+                    type="button"
+                    class="like-button"
+                    data-post-id="{{ post.id }}"
+                    onclick="toggleLike(this)">
+
+                    {% if post.id in liked_posts %}
+                        ❤️ Liked
+                    {% else %}
+                        🤍 Like
+                    {% endif %}
+
+                </button>
+
+                <span class="like-count" id="like-count-{{ post.id }}">
+                    {{ like_counts[post.id] }} Likes
+                </span>
+
+                <button type="button">💬 Comment</button>
+                <button type="button">↗ Share</button>
+
+            </div>
+</div>
+        </article>
+
+        {% else %}
+
+        <div class="empty">
+            <div>📝</div>
+            <h3>No posts yet</h3>
+            <p>Be the first person to share something.</p>
+        </div>
+
+        {% endfor %}
+
+    </main>
+
+
+    <aside class="rightbar">
+
+        <div class="card">
+
+            <h3>People You May Know</h3>
+
+            <div class="person">
+                <div class="avatar small">A</div>
+                <div>
+                    <strong>New Friends</strong>
+                    <small>Connect with people</small>
+                </div>
+                <button>+</button>
+            </div>
+
+            <div class="person">
+                <div class="avatar small">E</div>
+                <div>
+                    <strong>E-Diary Community</strong>
+                    <small>Discover new people</small>
+                </div>
+                <button>+</button>
+            </div>
+
+        </div>
+
+
+        <div class="card about">
+
+            <h3>About E-Diary</h3>
+
+            <p>
+                Your digital space to think, write,
+                share and connect.
+            </p>
+
+            <small>© 2026 E-Diary</small>
+
+        </div>
+
+    </aside>
+
+</div>
+<script>
+async function toggleLike(button) {
+    const postId = button.dataset.postId;
+
+    try {
+        const response = await fetch(`/api/posts/${postId}/like`, {
+            method: "POST"
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            alert(data.message || "Like गर्न सकिएन।");
+            return;
+        }
+
+        button.innerHTML = data.liked
+            ? "❤️ Liked"
+            : "🤍 Like";
+
+        document.getElementById(`like-count-${postId}`).textContent =
+            `${data.like_count} Likes`;
+
+    } catch (error) {
+        console.error(error);
+        alert("Server सँग connection भएन।");
+    }
+}
+</script>
+</body>
+</html>
